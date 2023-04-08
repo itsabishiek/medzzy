@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Image, Stack, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import React from "react";
 
 type HeroSectionProps = {};
@@ -6,18 +7,20 @@ type HeroSectionProps = {};
 const HeroSection: React.FC<HeroSectionProps> = () => {
   return (
     <Flex
+      flexDir={{ base: "column-reverse", md: "row" }}
       align="center"
       justify="center"
-      h="690px"
-      padding="0px 35px"
-      gap="50px"
+      h={{ base: "100%", md: "620px" }}
+      padding={{ base: "10px 35px 35px 35px", md: "0px 35px" }}
+      gap={{ base: "30px", md: "50px" }}
+      transform="translateY(-15px)"
     >
-      <Stack flex={1} gap="25px">
-        <Text fontSize="60px" fontWeight="bolder">
+      <Stack flex={1} gap={{ base: "15px", md: "25px" }}>
+        <Text fontSize={{ base: "35px", md: "60px" }} fontWeight="bolder">
           Make your patients track their health.
         </Text>
 
-        <Text color="text.100">
+        <Text color="text.100" fontSize={{ base: "14px", md: "unset" }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
           error ipsum eaque perferendis alias inventore. Unde dolor deleniti
           perferendis asperiores eos inventore saepe. Fuga, quia! Quidem aperiam
@@ -25,13 +28,23 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
         </Text>
 
         <Flex align="center" gap="15px" pt="15px">
-          <Button variant="solid">Try Medzzy for free</Button>
-          <Button variant="link">How it works</Button>
+          <Link href="/register">
+            <Button variant="solid">Try Medzzy for free</Button>
+          </Link>
+          <Link href="/">
+            <Button variant="link" fontSize={{ base: "14px", md: "unset" }}>
+              How it works
+            </Button>
+          </Link>
         </Flex>
       </Stack>
 
       <Box flex={1}>
-        <Image src="/img/hero.svg" alt="" />
+        <Image
+          boxSize={{ base: "400px", md: "unset" }}
+          src="/img/hero.svg"
+          alt=""
+        />
       </Box>
     </Flex>
   );

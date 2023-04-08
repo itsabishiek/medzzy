@@ -12,8 +12,10 @@ const Navbar: React.FC<NavbarProps> = () => {
       padding="0px 35px"
       h="70px"
       w="100%"
-      pos="fixed"
+      bg="bg.100"
+      pos="sticky"
       top={0}
+      zIndex={100}
     >
       <Link href="/">
         <Flex align="center" gap="10px">
@@ -26,8 +28,12 @@ const Navbar: React.FC<NavbarProps> = () => {
       </Link>
 
       <Flex align="center" gap="10px">
-        <Button variant="ghost">Login</Button>
-        <Button variant="outline">Get started</Button>
+        <Link href="/login">
+          <Button variant="ghost">Login</Button>
+        </Link>
+        <Link href="/register">
+          <Button variant="outline">Get started</Button>
+        </Link>
       </Flex>
     </Flex>
   );

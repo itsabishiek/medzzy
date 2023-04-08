@@ -4,6 +4,7 @@ export const Button: ComponentStyleConfig = {
   baseStyle: {
     borderRadius: "5px",
     fontWeight: 700,
+    cursor: "pointer",
     _focus: {
       boxShadow: "none",
     },
