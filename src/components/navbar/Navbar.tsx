@@ -1,15 +1,24 @@
 import { Button, Flex, Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
+import { auth } from "../../firebase/clientApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { signOut } from "firebase/auth";
 
 type NavbarProps = {};
 
 const Navbar: React.FC<NavbarProps> = () => {
+  const [user] = useAuthState(auth);
+
+  const logout = async () => {
+    await signOut(auth);
+  };
+
   return (
     <Flex
       align="center"
       justify="space-between"
-      padding="0px 35px"
+      padding={{ base: "0px 25px", md: "0px 35px" }}
       h="70px"
       w="100%"
       bg="bg.100"
@@ -27,14 +36,22 @@ const Navbar: React.FC<NavbarProps> = () => {
         </Flex>
       </Link>
 
-      <Flex align="center" gap="10px">
-        <Link href="/login">
-          <Button variant="ghost">Login</Button>
-        </Link>
-        <Link href="/register">
-          <Button variant="outline">Get started</Button>
-        </Link>
-      </Flex>
+      {!user ? (
+        <Flex align="center" gap="10px">
+          <Link href="/login">
+            <Button variant="ghost">Login</Button>
+          </Link>
+          <Link href="/register">
+            <Button variant="outline">Get started</Button>
+          </Link>
+        </Flex>
+      ) : (
+        <>
+          <Button variant="ghost" onClick={logout}>
+            Logout
+          </Button>
+        </>
+      )}
     </Flex>
   );
 };

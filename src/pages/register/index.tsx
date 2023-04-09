@@ -1,7 +1,26 @@
-import { Box, Button, Flex, Image, Input, Stack, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Input,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import React, { useEffect, useRef, useState } from "react";
+import { auth, firestore, storage } from "../../firebase/clientApp";
+import { FIREBASE_ERRORS } from "../../firebase/errors";
+import { User } from "firebase/auth";
+import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { useRouter } from "next/router";
+import useSelectedFile from "../../hooks/useSelectedFile";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 type RegisterProps = {};
 
@@ -12,7 +31,18 @@ const Register: React.FC<RegisterProps> = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    username: "",
   });
+  const [next, setNext] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [submit, setSubmit] = useState(false);
+  const router = useRouter();
+  const selectedFileRef = useRef<HTMLInputElement>(null);
+
+  const [createUserWithEmailAndPassword, user, userLoading, userError] =
+    useCreateUserWithEmailAndPassword(auth);
+  const { selectedFile, setSelectedFile, handleSelectFile } = useSelectedFile();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterForm((prev) => ({
@@ -23,7 +53,58 @@ const Register: React.FC<RegisterProps> = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (registerForm.password === registerForm.confirmPassword) {
+      createUserWithEmailAndPassword(registerForm.email, registerForm.password);
+    } else {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    setNext(true);
   };
+
+  const createHospitalCol = async (user: User) => {
+    setLoading(true);
+    try {
+      await setDoc(doc(firestore, "/hospitals", registerForm.username), {
+        uid: user.uid,
+        name: registerForm.name,
+        username: registerForm.username,
+        desc: registerForm.desc,
+        email: registerForm.email,
+        createdAt: serverTimestamp(),
+      });
+
+      if (selectedFile) {
+        const imageRef = ref(
+          storage,
+          `/hospitals/${registerForm.username}/image`
+        );
+        await uploadString(imageRef, selectedFile, "data_url");
+        const downloadURL = await getDownloadURL(imageRef);
+
+        await updateDoc(doc(firestore, "/hospitals", registerForm.username), {
+          imageURL: downloadURL,
+        });
+      }
+
+      setSelectedFile("");
+      router.push("/");
+    } catch (error) {
+      console.log("createHospitalCol", error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (user && submit) {
+      createHospitalCol(user.user);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, submit]);
+
+  console.log(selectedFile);
 
   return (
     <>
@@ -39,42 +120,157 @@ const Register: React.FC<RegisterProps> = () => {
         </Box>
 
         <Stack flex={2} padding="0 35px">
-          <form onSubmit={handleSubmit}>
+          {!next && (
+            <form onSubmit={handleSubmit}>
+              <Stack
+                align="center"
+                width={{ base: "100%", md: "450px" }}
+                gap="20px"
+                margin="0px auto"
+              >
+                <Text fontWeight={600} fontSize="28px" color="brand.100">
+                  Register
+                </Text>
+
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="Hospital Name"
+                  height="50px"
+                  width="100%"
+                  _focus={{ border: "1px solid #27c399" }}
+                  onChange={handleChange}
+                />
+
+                <Input
+                  type="text"
+                  name="desc"
+                  placeholder="Description"
+                  height="50px"
+                  width="100%"
+                  _focus={{ border: "1px solid #27c399" }}
+                  onChange={handleChange}
+                />
+
+                <Box w="100%">
+                  <Input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    height="50px"
+                    width="100%"
+                    _focus={{ border: "1px solid #27c399" }}
+                    onChange={handleChange}
+                  />
+                  <Text
+                    fontSize="10pt"
+                    color="gray.300"
+                    padding="10px 5px"
+                    pb={0}
+                  >
+                    Enter the professional email address of your hospital.
+                  </Text>
+                </Box>
+
+                <Input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  height="50px"
+                  width="100%"
+                  _focus={{ border: "1px solid #27c399" }}
+                  onChange={handleChange}
+                />
+
+                <Input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  height="50px"
+                  width="100%"
+                  _focus={{ border: "1px solid #27c399" }}
+                  onChange={handleChange}
+                />
+
+                <Flex align="center" gap="5px">
+                  <Text>Already have an account?</Text>
+                  <Link href="/login">
+                    <Button variant="link">Login</Button>
+                  </Link>
+                </Flex>
+
+                {(error || userError) && (
+                  <Text fontSize="11pt" color="red.200">
+                    {error}
+                    {
+                      FIREBASE_ERRORS[
+                        userError?.message as keyof typeof FIREBASE_ERRORS
+                      ]
+                    }
+                  </Text>
+                )}
+
+                <Button width="100%" type="submit" isLoading={userLoading}>
+                  Register
+                </Button>
+              </Stack>
+            </form>
+          )}
+
+          {next && (
             <Stack
               align="center"
-              width={{ base: "100%", md: "450px" }}
-              gap="20px"
+              w={{ base: "100%", md: "450px" }}
               margin="0px auto"
+              gap="20px"
             >
               <Text fontWeight={600} fontSize="28px" color="brand.100">
-                Register
+                Set a Unique name
               </Text>
 
-              <Input
-                type="text"
-                name="name"
-                placeholder="Hospital Name"
-                height="50px"
-                width="100%"
-                _focus={{ border: "1px solid #27c399" }}
-                onChange={handleChange}
-              />
-
-              <Input
-                type="text"
-                name="desc"
-                placeholder="Description"
-                height="50px"
-                width="100%"
-                _focus={{ border: "1px solid #27c399" }}
-                onChange={handleChange}
-              />
-
+              <Flex align="center" width="100%" gap="20px" pos="relative">
+                {!selectedFile ? (
+                  <>
+                    <Avatar
+                      src=""
+                      boxSize="56px"
+                      cursor="pointer"
+                      onClick={() => selectedFileRef?.current?.click()}
+                    />
+                    <Icon
+                      pos="absolute"
+                      top="0px"
+                      left="40px"
+                      borderRadius="50%"
+                      bg="brand.100"
+                      padding="2px"
+                    >
+                      <AddIcon color="white" fontSize="" boxSize="4px" />
+                    </Icon>
+                  </>
+                ) : (
+                  <Avatar src={selectedFile} boxSize="56px" />
+                )}
+                <input
+                  id="file-upload"
+                  type="file"
+                  accept="image/x-png,image/gif,image/jpeg,image/jpg,image/png"
+                  hidden
+                  ref={selectedFileRef}
+                  onChange={handleSelectFile}
+                />
+                <Stack>
+                  <Text>{registerForm.name}</Text>
+                  <Text fontSize="10pt" color="gray.300" pb={0}>
+                    Add your hospital logo here.
+                  </Text>
+                </Stack>
+              </Flex>
               <Box w="100%">
                 <Input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
+                  type="text"
+                  name="username"
+                  placeholder="Hospital Username (e.g. healthcare)"
                   height="50px"
                   width="100%"
                   _focus={{ border: "1px solid #27c399" }}
@@ -86,42 +282,19 @@ const Register: React.FC<RegisterProps> = () => {
                   padding="10px 5px"
                   pb={0}
                 >
-                  Enter the professional email address of your hospital.
+                  Enter username for your Hospital.
                 </Text>
               </Box>
-
-              <Input
-                type="password"
-                name="password"
-                placeholder="Password"
-                height="50px"
+              <Button
                 width="100%"
-                _focus={{ border: "1px solid #27c399" }}
-                onChange={handleChange}
-              />
-
-              <Input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                height="50px"
-                width="100%"
-                _focus={{ border: "1px solid #27c399" }}
-                onChange={handleChange}
-              />
-
-              <Flex align="center" gap="5px">
-                <Text>Already have an account?</Text>
-                <Link href="/login">
-                  <Button variant="link">Login</Button>
-                </Link>
-              </Flex>
-
-              <Button width="100%" type="submit">
-                Register
+                type="submit"
+                isLoading={loading}
+                onClick={() => setSubmit(true)}
+              >
+                Submit
               </Button>
             </Stack>
-          </form>
+          )}
         </Stack>
 
         <Box flex={1} h="100%" display={{ base: "none", md: "unset" }}>

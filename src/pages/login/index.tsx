@@ -2,6 +2,10 @@ import { Box, Button, Flex, Image, Input, Stack, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase/clientApp";
+import { useRouter } from "next/router";
+import { FIREBASE_ERRORS } from "../../firebase/errors";
 
 type LoginProps = {};
 
@@ -10,6 +14,10 @@ const Login: React.FC<LoginProps> = () => {
     email: "",
     password: "",
   });
+  const router = useRouter();
+
+  const [signInWithEmailAndPassword, user, userLoading, userError] =
+    useSignInWithEmailAndPassword(auth);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginForm((prev) => ({
@@ -20,6 +28,9 @@ const Login: React.FC<LoginProps> = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    signInWithEmailAndPassword(loginForm.email, loginForm.password);
+    router.push("/");
   };
 
   return (
@@ -69,7 +80,17 @@ const Login: React.FC<LoginProps> = () => {
                   </Link>
                 </Flex>
 
-                <Button w="100%" type="submit">
+                {userError && (
+                  <Text fontSize="11pt" color="red.200">
+                    {
+                      FIREBASE_ERRORS[
+                        userError?.message as keyof typeof FIREBASE_ERRORS
+                      ]
+                    }
+                  </Text>
+                )}
+
+                <Button w="100%" type="submit" isLoading={userLoading}>
                   Login
                 </Button>
               </Stack>
