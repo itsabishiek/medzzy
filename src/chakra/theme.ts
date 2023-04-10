@@ -17,10 +17,6 @@ export const theme = extendTheme({
   fonts: {
     body: "Open Sans, sans-serif",
   },
-  config: {
-    initialColorMode: "dark", // 'dark' | 'light'
-    useSystemColorMode: false,
-  },
   styles: {
     global: () => ({
       body: {

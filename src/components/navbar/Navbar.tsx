@@ -1,18 +1,18 @@
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import { Avatar, Button, Flex, Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
-import { auth } from "../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/clientApp";
+import useHospitalData from "../../hooks/useHospitalData";
+import HospitalMenu from "../menus/HospitalMenu";
 
 type NavbarProps = {};
 
 const Navbar: React.FC<NavbarProps> = () => {
   const [user] = useAuthState(auth);
-
-  const logout = async () => {
-    await signOut(auth);
-  };
+  const { hospitalStateValue } = useHospitalData();
+  const hospitalData = hospitalStateValue.hospitalData;
 
   return (
     <Flex
@@ -46,11 +46,23 @@ const Navbar: React.FC<NavbarProps> = () => {
           </Link>
         </Flex>
       ) : (
-        <>
-          <Button variant="ghost" onClick={logout}>
-            Logout
-          </Button>
-        </>
+        <HospitalMenu>
+          <Flex
+            align="center"
+            gap="10px"
+            bg="gray.700"
+            borderRadius="30px"
+            padding="5px"
+          >
+            <Avatar src={hospitalData?.imageURL} boxSize="30px" />
+            <Flex align="center">
+              <Text fontWeight={600} color="text.100">
+                {hospitalData.name}
+              </Text>
+              <ChevronDownIcon fontSize="2xl" color="text.100" />
+            </Flex>
+          </Flex>
+        </HospitalMenu>
       )}
     </Flex>
   );

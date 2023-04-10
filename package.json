@@ -14,12 +14,15 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/open-sans": "^4.5.14",
+    "@tanem/react-nprogress": "^5.0.33",
     "firebase": "^9.19.1",
     "framer-motion": "^10.11.2",
+    "moment": "^2.29.4",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-firebase-hooks": "^5.1.1"
+    "react-firebase-hooks": "^5.1.1",
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
     "@types/node": "18.15.11",
