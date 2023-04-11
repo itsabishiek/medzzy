@@ -11,12 +11,17 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
       align="center"
       justify="center"
       h={{ base: "100%", md: "620px" }}
-      padding={{ base: "10px 35px 35px 35px", md: "0px 35px" }}
+      padding={{ base: "10px 30px 35px 30px", md: "0px 35px" }}
       gap={{ base: "30px", md: "50px" }}
       transform="translateY(-15px)"
     >
       <Stack flex={1} gap={{ base: "15px", md: "25px" }}>
-        <Text fontSize={{ base: "35px", md: "60px" }} fontWeight="bolder">
+        <Text
+          fontSize={{ base: "38px", md: "60px" }}
+          fontWeight="bolder"
+          bgGradient="linear(to-r, teal.500, green.500)"
+          bgClip="text"
+        >
           Make your patients track their health.
         </Text>
 
@@ -41,7 +46,8 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
 
       <Box flex={1}>
         <Image
-          boxSize={{ base: "400px", md: "unset" }}
+          h={{ base: "300px", md: "unset" }}
+          objectFit="contain"
           src="/img/hero.svg"
           alt=""
         />

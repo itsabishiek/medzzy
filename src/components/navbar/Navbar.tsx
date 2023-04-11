@@ -49,14 +49,18 @@ const Navbar: React.FC<NavbarProps> = () => {
         <HospitalMenu>
           <Flex
             align="center"
-            gap="10px"
+            gap={{ base: "2px", md: "10px" }}
             bg="gray.700"
             borderRadius="30px"
             padding="5px"
           >
             <Avatar src={hospitalData?.imageURL} boxSize="30px" />
             <Flex align="center">
-              <Text fontWeight={600} color="text.100">
+              <Text
+                fontWeight={600}
+                color="brand.100"
+                display={{ base: "none", md: "unset" }}
+              >
                 {hospitalData.name}
               </Text>
               <ChevronDownIcon fontSize="2xl" color="text.100" />
