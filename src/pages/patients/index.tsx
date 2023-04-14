@@ -1,7 +1,8 @@
-import { Box, Stack } from "@chakra-ui/react";
 import Head from "next/head";
+import { Stack } from "@mui/material";
 import React from "react";
 import Header from "../../components/header/Header";
+import DataTable from "../../components/dataTable/DataTable";
 
 type indexProps = {};
 
@@ -16,6 +17,8 @@ const index: React.FC<indexProps> = () => {
 
       <Stack p="30px">
         <Header title="Patients" />
+
+        <DataTable />
       </Stack>
     </>
   );

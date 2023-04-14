@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.18",
-    "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/open-sans": "^4.5.14",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.12.0",
+    "@mui/x-data-grid": "^6.1.0",
     "@tanem/react-nprogress": "^5.0.33",
     "firebase": "^9.19.1",
     "framer-motion": "^10.11.2",
@@ -22,7 +23,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.1.1",
-    "react-icons": "^4.8.0",
     "recoil": "^0.7.7"
   },
   "devDependencies": {

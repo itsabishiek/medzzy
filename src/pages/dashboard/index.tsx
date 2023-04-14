@@ -1,6 +1,6 @@
-import { Box, Stack } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
+import { Stack } from "@mui/material";
 import Header from "../../components/header/Header";
 
 type DashboardProps = {};

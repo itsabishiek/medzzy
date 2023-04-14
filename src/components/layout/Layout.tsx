@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../navbar/Navbar";
 import { useRouter } from "next/router";
-import { Box, Flex } from "@chakra-ui/react";
+import { Stack, Box } from "@mui/material";
 import Sidebar from "../sidebar/Sidebar";
 
 type LayoutProps = {
@@ -21,14 +21,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       ) && <Navbar />}
 
       {pathname === "/dashboard" || pathname === "/patients" ? (
-        <Flex>
+        <Stack flexDirection="row">
           <Box flex={1}>
             <Sidebar />
           </Box>
           <Box flex={5}>
             <main>{children}</main>
           </Box>
-        </Flex>
+        </Stack>
       ) : (
         <main>{children}</main>
       )}

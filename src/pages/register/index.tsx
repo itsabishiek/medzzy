@@ -1,15 +1,14 @@
 import {
-  Avatar,
-  Box,
-  Button,
-  Flex,
-  Icon,
-  Image,
-  Input,
+  Typography,
   Stack,
-  Text,
-} from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+  Avatar,
+  Icon,
+  TextField,
+  Button,
+  Box,
+  CircularProgress,
+} from "@mui/material";
+import { Add } from "@mui/icons-material";
 import Head from "next/head";
 import Link from "next/link";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
@@ -21,6 +20,7 @@ import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import useSelectedFile from "../../hooks/useSelectedFile";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import Image from "next/image";
 
 type RegisterProps = {};
 
@@ -90,7 +90,7 @@ const Register: React.FC<RegisterProps> = () => {
       }
 
       setSelectedFile("");
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       console.log("createHospitalCol", error);
     }
@@ -114,104 +114,137 @@ const Register: React.FC<RegisterProps> = () => {
         <link rel="icon" href="/img/logo.svg" />
       </Head>
 
-      <Flex align="center" justify="center" height="100vh" gap="15px">
-        <Box flex={1} h="100%" display={{ base: "none", md: "unset" }}>
-          <Image h="100%" objectFit="cover" src="/img/pattern.png" alt="" />
+      <Stack
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+        height="100vh"
+        gap="15px"
+      >
+        <Box
+          flex={1}
+          position="relative"
+          height="100%"
+          width="100%"
+          display={{ xs: "none", md: "unset" }}
+        >
+          <Image
+            fill
+            style={{ objectFit: "cover" }}
+            src="/img/pattern.png"
+            alt=""
+          />
         </Box>
 
         <Stack flex={2} padding="0 35px">
           {!next && (
             <form onSubmit={handleSubmit}>
               <Stack
-                align="center"
-                width={{ base: "100%", md: "450px" }}
+                alignItems="center"
+                width={{ xs: "100%", md: "450px" }}
                 gap="20px"
                 margin="0px auto"
               >
-                <Text fontWeight={600} fontSize="28px" color="brand.100">
+                <Typography fontWeight={600} fontSize="28px" color="brand.100">
                   Register
-                </Text>
+                </Typography>
 
-                <Input
+                <TextField
                   type="text"
                   name="name"
                   placeholder="Hospital Name"
-                  height="50px"
-                  width="100%"
-                  _focus={{ border: "1px solid #27c399" }}
+                  sx={{
+                    height: "50px",
+                    width: "100%",
+                    "&:focus": { border: "1px solid #27c399" },
+                  }}
                   onChange={handleChange}
                 />
 
-                <Input
+                <TextField
                   type="text"
                   name="desc"
                   placeholder="Description"
-                  height="50px"
-                  width="100%"
-                  _focus={{ border: "1px solid #27c399" }}
+                  sx={{
+                    height: "50px",
+                    width: "100%",
+                    "&:focus": { border: "1px solid #27c399" },
+                  }}
                   onChange={handleChange}
                 />
 
-                <Box w="100%">
-                  <Input
+                <Box width="100%">
+                  <TextField
                     type="email"
                     name="email"
                     placeholder="Email"
-                    height="50px"
-                    width="100%"
-                    _focus={{ border: "1px solid #27c399" }}
+                    sx={{
+                      height: "50px",
+                      width: "100%",
+                      "&:focus": { border: "1px solid #27c399" },
+                    }}
                     onChange={handleChange}
                   />
-                  <Text
+                  <Typography
                     fontSize="10pt"
                     color="gray.300"
                     padding="10px 5px"
                     pb={0}
                   >
                     Enter the professional email address of your hospital.
-                  </Text>
+                  </Typography>
                 </Box>
 
-                <Input
+                <TextField
                   type="password"
                   name="password"
                   placeholder="Password"
-                  height="50px"
-                  width="100%"
-                  _focus={{ border: "1px solid #27c399" }}
+                  sx={{
+                    height: "50px",
+                    width: "100%",
+                    "&:focus": { border: "1px solid #27c399" },
+                  }}
                   onChange={handleChange}
                 />
 
-                <Input
+                <TextField
                   type="password"
                   name="confirmPassword"
                   placeholder="Confirm Password"
-                  height="50px"
-                  width="100%"
-                  _focus={{ border: "1px solid #27c399" }}
+                  sx={{
+                    height: "50px",
+                    width: "100%",
+                    "&:focus": { border: "1px solid #27c399" },
+                  }}
                   onChange={handleChange}
                 />
 
-                <Flex align="center" gap="5px">
-                  <Text>Already have an account?</Text>
+                <Stack flexDirection="row" alignItems="center" gap="5px" mt={1}>
+                  <Typography>Already have an account?</Typography>
                   <Link href="/login">
-                    <Button variant="link">Login</Button>
+                    <Typography color="var(--accent-color)" fontWeight={500}>
+                      Login
+                    </Typography>
                   </Link>
-                </Flex>
+                </Stack>
 
                 {(error || userError) && (
-                  <Text fontSize="11pt" color="red.200">
+                  <Typography fontSize="11pt" color="red.200">
                     {error}
                     {
                       FIREBASE_ERRORS[
                         userError?.message as keyof typeof FIREBASE_ERRORS
                       ]
                     }
-                  </Text>
+                  </Typography>
                 )}
 
-                <Button width="100%" type="submit" isLoading={userLoading}>
-                  Register
+                <Button type="submit" fullWidth variant="contained">
+                  {userLoading ? (
+                    <CircularProgress color="inherit" size="25px" />
+                  ) : (
+                    "Register"
+                  )}
                 </Button>
               </Stack>
             </form>
@@ -219,37 +252,53 @@ const Register: React.FC<RegisterProps> = () => {
 
           {next && (
             <Stack
-              align="center"
-              w={{ base: "100%", md: "450px" }}
+              alignItems="center"
+              width={{ xs: "100%", md: "450px" }}
               margin="0px auto"
               gap="20px"
             >
-              <Text fontWeight={600} fontSize="28px" color="brand.100">
+              <Typography fontWeight={600} fontSize="28px" color="brand.100">
                 Set a Unique name
-              </Text>
+              </Typography>
 
-              <Flex align="center" width="100%" gap="20px" pos="relative">
+              <Stack
+                flexDirection="row"
+                alignItems="center"
+                width="100%"
+                gap="20px"
+                position="relative"
+              >
                 {!selectedFile ? (
                   <>
                     <Avatar
                       src=""
-                      boxSize="56px"
-                      cursor="pointer"
+                      sx={{
+                        width: "56px",
+                        height: "56px",
+                        cursor: "pointer",
+                      }}
                       onClick={() => selectedFileRef?.current?.click()}
                     />
                     <Icon
-                      pos="absolute"
-                      top="0px"
-                      left="40px"
-                      borderRadius="50%"
-                      bg="brand.100"
-                      padding="2px"
+                      sx={{
+                        position: "absolute",
+                        top: "0px",
+                        left: "40px",
+                        borderRadius: "50%",
+                        bgcolor: "brand.100",
+                        padding: "2px",
+                      }}
                     >
-                      <AddIcon color="white" fontSize="" boxSize="4px" />
+                      <Add
+                        sx={{ width: "4px", height: "4px", color: "white" }}
+                      />
                     </Icon>
                   </>
                 ) : (
-                  <Avatar src={selectedFile} boxSize="56px" />
+                  <Avatar
+                    src={selectedFile}
+                    sx={{ width: "56px", height: "56px" }}
+                  />
                 )}
                 <input
                   id="file-upload"
@@ -260,47 +309,64 @@ const Register: React.FC<RegisterProps> = () => {
                   onChange={handleSelectFile}
                 />
                 <Stack>
-                  <Text>{registerForm.name}</Text>
-                  <Text fontSize="10pt" color="gray.300" pb={0}>
+                  <Typography>{registerForm.name}</Typography>
+                  <Typography fontSize="10pt" color="gray.300" pb={0}>
                     Add your hospital logo here.
-                  </Text>
+                  </Typography>
                 </Stack>
-              </Flex>
-              <Box w="100%">
-                <Input
+              </Stack>
+              <Box width="100%">
+                <TextField
                   type="text"
                   name="username"
                   placeholder="Hospital Username (e.g. healthcare)"
-                  height="50px"
-                  width="100%"
-                  _focus={{ border: "1px solid #27c399" }}
+                  sx={{
+                    height: "50px",
+                    width: "100%",
+                    "&:focus": { border: "1px solid #27c399" },
+                  }}
                   onChange={handleChange}
                 />
-                <Text
+                <Typography
                   fontSize="10pt"
-                  color="gray.300"
+                  color="var(--text-sec)"
                   padding="10px 5px"
                   pb={0}
                 >
                   Enter username for your Hospital.
-                </Text>
+                </Typography>
               </Box>
               <Button
-                width="100%"
                 type="submit"
-                isLoading={loading}
+                variant="contained"
+                fullWidth
                 onClick={() => setSubmit(true)}
               >
-                Submit
+                {loading ? (
+                  <CircularProgress color="inherit" size="25px" />
+                ) : (
+                  "Submit"
+                )}
               </Button>
             </Stack>
           )}
         </Stack>
 
-        <Box flex={1} h="100%" display={{ base: "none", md: "unset" }}>
-          <Image h="100%" objectFit="cover" src="/img/pattern.png" alt="" />
+        <Box
+          flex={1}
+          position="relative"
+          height="100%"
+          width="100%"
+          display={{ xs: "none", md: "unset" }}
+        >
+          <Image
+            layout="fill"
+            objectFit="cover"
+            src="/img/pattern.png"
+            alt=""
+          />
         </Box>
-      </Flex>
+      </Stack>
     </>
   );
 };

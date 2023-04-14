@@ -1,13 +1,18 @@
-import { Box, Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
-import { RxDashboard } from "react-icons/rx";
-import { BsPersonLinesFill } from "react-icons/bs";
-import { HiOutlineLogout } from "react-icons/hi";
-import { GiDoctorFace, GiHealthNormal } from "react-icons/gi";
+import { Typography, Stack, Box } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router";
-import NextLink from "next/link";
+import Link from "next/link";
 import { auth } from "../../firebase/clientApp";
 import { signOut } from "firebase/auth";
+import {
+  Dashboard,
+  Diversity1,
+  Logout,
+  MedicalInformation,
+  Person2,
+  Tune,
+} from "@mui/icons-material";
+import Image from "next/image";
 
 type SidebarProps = {};
 
@@ -22,148 +27,214 @@ const Sidebar: React.FC<SidebarProps> = () => {
 
   return (
     <Stack
-      pos="relative"
-      h="100vh"
-      borderRight="0.5px solid"
-      borderColor="brand.200"
-      p="15px"
-      bg="rgba(48, 140, 122, 0.15)"
+      position="relative"
+      height="100vh"
+      borderRight="0.5px solid #308c7a4d"
+      padding="15px"
+      bgcolor="rgba(48, 140, 122, 0.15)"
       borderRadius="0px 30px 30px 0px"
     >
-      <Flex align="center" justify="center" gap="10px" mb="40px">
-        <Image src="/img/logo.svg" alt="" h="45px" />
-        <Flex align="center">
-          <Text color="brand.100">MED</Text>
-          <Text color="text.100">ZZY!</Text>
-        </Flex>
-      </Flex>
+      <Stack
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+        gap="10px"
+        marginBottom="40px"
+      >
+        <Image src="/img/logo.svg" alt="" height="45" width="45" />
+        <Stack flexDirection="row" alignItems="center">
+          <Typography color="var(--accent-color)">MED</Typography>
+          <Typography color="var(--text-sec)">ZZY!</Typography>
+        </Stack>
+      </Stack>
 
-      <Stack gap="15px" align="center">
+      <Stack gap="20px" alignItems="center">
         <Link
-          as={NextLink}
-          style={{ textDecoration: "none" }}
           href="/dashboard"
-          w="100%"
-          transition="all 0.3s ease"
-          bg={pathname === "/dashboard" ? "brand.100" : "unset"}
-          borderRadius="15px"
-          _hover={{ bg: "brand.200" }}
+          style={{
+            width: "100%",
+          }}
         >
-          <Flex
-            align="center"
-            justify="flex-start"
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="flex-start"
             gap="15px"
-            w="100%"
-            p="15px 20px"
+            width="100%"
+            padding="15px 20px"
             borderRadius="15px"
-            cursor="pointer"
-            color={pathname === "/dashboard" ? "white" : "text.100"}
+            color={pathname === "/dashboard" ? "white" : "var(--text-sec)"}
+            sx={{
+              transition: "all 0.3s ease",
+              backgroundColor:
+                pathname === "/dashboard" ? "var(--accent-color)" : "unset",
+              borderRadius: "15px",
+              "&:hover": { backgroundColor: "var(--accent-light)" },
+              cursor: "pointer",
+            }}
           >
-            <RxDashboard />
-            <Text fontWeight="bold" fontSize="15px">
+            <Dashboard />
+            <Typography fontWeight="bold" fontSize="15px">
               DASHBOARD
-            </Text>
-          </Flex>
+            </Typography>
+          </Stack>
         </Link>
 
         <Link
-          as={NextLink}
           href="/patients"
-          style={{ textDecoration: "none" }}
-          w="100%"
-          bg={pathname === "/patients" ? "brand.100" : "unset"}
-          borderRadius="15px"
-          _hover={{ bg: "brand.200" }}
+          style={{
+            width: "100%",
+          }}
         >
-          <Flex
-            align="center"
-            justify="flex-start"
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="flex-start"
             gap="15px"
-            w="100%"
-            p="15px 20px"
+            width="100%"
+            padding="15px 20px"
             borderRadius="15px"
-            cursor="pointer"
-            color={pathname === "/patients" ? "white" : "text.100"}
+            sx={{
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              bgcolor:
+                pathname === "/patients" ? "var(--accent-color)" : "unset",
+              borderRadius: "15px",
+              "&:hover": { bgcolor: "var(--accent-light)" },
+            }}
+            color={pathname === "/patients" ? "white" : "var(--text-sec)"}
           >
-            <BsPersonLinesFill />
-            <Text fontWeight="bold" fontSize="15px">
+            <Person2 />
+            <Typography fontWeight="bold" fontSize="15px">
               PATIENTS
-            </Text>
-          </Flex>
+            </Typography>
+          </Stack>
         </Link>
 
         <Link
-          as={NextLink}
           href="/"
-          style={{ textDecoration: "none" }}
-          w="100%"
-          bg={pathname === "/doctors" ? "brand.100" : "unset"}
-          borderRadius="15px"
-          _hover={{ bg: "brand.200" }}
+          style={{
+            width: "100%",
+          }}
         >
-          <Flex
-            align="center"
-            justify="flex-start"
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="flex-start"
             gap="15px"
-            w="100%"
-            p="15px 20px"
+            width="100%"
+            padding="15px 20px"
             borderRadius="15px"
-            cursor="pointer"
-            color={pathname === "/doctors" ? "white" : "text.100"}
+            sx={{
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              bgcolor:
+                pathname === "/doctors" ? "var(--accent-color)" : "unset",
+              borderRadius: "15px",
+              "&:hover": { bgcolor: "var(--accent-light)" },
+            }}
+            color={pathname === "/doctors" ? "white" : "var(--text-sec)"}
           >
-            <GiDoctorFace />
-            <Text fontWeight="bold" fontSize="15px">
+            <Diversity1 />
+            <Typography fontWeight="bold" fontSize="15px">
               DOCTORS
-            </Text>
-          </Flex>
+            </Typography>
+          </Stack>
         </Link>
 
         <Link
-          as={NextLink}
           href="/"
-          style={{ textDecoration: "none" }}
-          w="100%"
-          bg={pathname === "/healthcare" ? "brand.100" : "unset"}
-          borderRadius="15px"
-          _hover={{ bg: "brand.200" }}
+          style={{
+            width: "100%",
+          }}
         >
-          <Flex
-            align="center"
-            justify="flex-start"
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="flex-start"
             gap="15px"
-            w="100%"
-            p="15px 20px"
+            width="100%"
+            padding="15px 20px"
             borderRadius="15px"
-            cursor="pointer"
-            color={pathname === "/healthcare" ? "white" : "text.100"}
+            sx={{
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              bgcolor:
+                pathname === "/healthcare" ? "var(--accent-color)" : "unset",
+              borderRadius: "15px",
+              "&:hover": { bgcolor: "var(--accent-light)" },
+            }}
+            color={pathname === "/healthcare" ? "white" : "var(--text-sec)"}
           >
-            <GiHealthNormal />
-            <Text fontWeight="bold" fontSize="15px">
+            <MedicalInformation />
+            <Typography fontWeight="bold" fontSize="15px">
               HEALTHCARE
-            </Text>
-          </Flex>
+            </Typography>
+          </Stack>
+        </Link>
+
+        <Link
+          href="/"
+          style={{
+            width: "100%",
+          }}
+        >
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="flex-start"
+            gap="15px"
+            width="100%"
+            padding="15px 20px"
+            borderRadius="15px"
+            sx={{
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              bgcolor:
+                pathname === "/settings" ? "var(--accent-color)" : "unset",
+              borderRadius: "15px",
+              "&:hover": { bgcolor: "var(--accent-light)" },
+            }}
+            color={pathname === "/settings" ? "white" : "var(--text-sec)"}
+          >
+            <Tune />
+            <Typography fontWeight="bold" fontSize="15px">
+              SETTINGS
+            </Typography>
+          </Stack>
         </Link>
       </Stack>
 
-      <Box p="0px 15px" pos="absolute" bottom="15px" left="0px" w="100%">
-        <Flex
+      <Box
+        p="0px 15px"
+        position="absolute"
+        bottom="15px"
+        left="0px"
+        width="100%"
+      >
+        <Stack
+          flexDirection="row"
           alignItems="center"
-          justify="flex-start"
+          justifyContent="flex-start"
           gap="15px"
-          w="100%"
-          p="15px 20px"
+          width="100%"
+          padding="15px 20px"
           borderRadius="15px"
-          cursor="pointer"
-          color={pathname === "/healthcare" ? "white" : "text.100"}
-          bg={pathname === "/healthcare" ? "brand.100" : "unset"}
-          _hover={{ bg: "brand.200" }}
+          color={pathname === "/healthcare" ? "white" : "var(--text-sec)"}
+          bgcolor={pathname === "/healthcare" ? "var(--accent-color)" : "unset"}
+          sx={{
+            cursor: "pointer",
+            "&:hover": {
+              backgroundColor: "var(--accent-light)",
+            },
+          }}
           onClick={logout}
         >
-          <HiOutlineLogout />
-          <Text fontWeight="bold" fontSize="15px">
+          <Logout />
+          <Typography fontWeight="bold" fontSize="15px">
             LOGOUT
-          </Text>
-        </Flex>
+          </Typography>
+        </Stack>
       </Box>
     </Stack>
   );

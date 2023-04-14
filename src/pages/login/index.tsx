@@ -1,4 +1,11 @@
-import { Box, Button, Flex, Image, Input, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  Typography,
+  Button,
+  CircularProgress,
+  TextField,
+} from "@mui/material";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -6,6 +13,7 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
 import { useRouter } from "next/router";
 import { FIREBASE_ERRORS } from "../../firebase/errors";
+import Image from "next/image";
 
 type LoginProps = {};
 
@@ -30,7 +38,7 @@ const Login: React.FC<LoginProps> = () => {
     e.preventDefault();
 
     signInWithEmailAndPassword(loginForm.email, loginForm.password);
-    router.push("/");
+    router.push("/dashboard");
   };
 
   return (
@@ -41,63 +49,89 @@ const Login: React.FC<LoginProps> = () => {
         <link rel="icon" href="/img/logo.svg" />
       </Head>
 
-      <Flex align="center" h="100vh">
-        <Box flex={1} h="100%" display={{ base: "none", md: "unset" }}>
-          <Image h="100%" objectFit="cover" src="/img/pattern.png" alt="" />
+      <Stack flexDirection="row" alignItems="center" height="100vh">
+        <Box
+          flex={1}
+          position="relative"
+          height="100%"
+          width="100%"
+          display={{ xs: "none", md: "unset" }}
+        >
+          <Image
+            fill
+            style={{ objectFit: "cover" }}
+            src="/img/pattern.png"
+            alt=""
+          />
         </Box>
 
-        <Stack align="center" justify="center" flex={1} padding="0px 35px">
-          <Box w={{ base: "100%", md: "420px" }}>
+        <Stack
+          alignItems="center"
+          justifyContent="center"
+          flex={1}
+          padding="0px 35px"
+        >
+          <Box width={{ xs: "100%", md: "420px" }}>
             <form onSubmit={handleSubmit}>
-              <Stack align="center" gap="20px" w="100%">
-                <Text fontWeight={600} fontSize="28px" color="brand.100">
+              <Stack alignItems="center" gap="25px" width="100%">
+                <Typography fontWeight={600} fontSize="28px" color="brand.100">
                   Login
-                </Text>
+                </Typography>
 
-                <Input
+                <TextField
                   type="email"
                   name="email"
                   placeholder="Email"
-                  height="50px"
-                  width="100%"
-                  _focus={{ border: "1px solid #27c399" }}
+                  sx={{
+                    height: "50px",
+                    width: "100%",
+                    "&:focus": { border: "1px solid #27c399" },
+                  }}
                   onChange={handleChange}
                 />
-                <Input
+                <TextField
                   type="password"
                   name="password"
                   placeholder="Password"
-                  height="50px"
-                  width="100%"
-                  _focus={{ border: "1px solid #27c399" }}
+                  sx={{
+                    height: "50px",
+                    width: "100%",
+                    "&:focus": { border: "1px solid #27c399" },
+                  }}
                   onChange={handleChange}
                 />
 
-                <Flex align="center" gap="5px">
-                  <Text>Not have an account?</Text>
+                <Stack flexDirection="row" alignItems="center" gap="5px" mt={1}>
+                  <Typography>Not have an account?</Typography>
                   <Link href="/register">
-                    <Button variant="link">Create one</Button>
+                    <Typography color="var(--accent-color)" fontWeight={500}>
+                      Create one
+                    </Typography>
                   </Link>
-                </Flex>
+                </Stack>
 
                 {userError && (
-                  <Text fontSize="11pt" color="red.200">
+                  <Typography fontSize="11pt" color="red.200">
                     {
                       FIREBASE_ERRORS[
                         userError?.message as keyof typeof FIREBASE_ERRORS
                       ]
                     }
-                  </Text>
+                  </Typography>
                 )}
 
-                <Button w="100%" type="submit" isLoading={userLoading}>
-                  Login
+                <Button type="submit" fullWidth variant="contained">
+                  {userLoading ? (
+                    <CircularProgress color="inherit" size="25px" />
+                  ) : (
+                    "Login"
+                  )}
                 </Button>
               </Stack>
             </form>
           </Box>
         </Stack>
-      </Flex>
+      </Stack>
     </>
   );
 };

@@ -1,11 +1,12 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Avatar, Button, Flex, Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
 import useHospitalData from "../../hooks/useHospitalData";
 import HospitalMenu from "../menus/HospitalMenu";
+import { Stack, Button, Typography, Avatar } from "@mui/material";
+import { ExpandMore } from "@mui/icons-material";
+import Image from "next/image";
 
 type NavbarProps = {};
 
@@ -15,60 +16,68 @@ const Navbar: React.FC<NavbarProps> = () => {
   const hospitalData = hospitalStateValue.hospitalData;
 
   return (
-    <Flex
-      align="center"
-      justify="space-between"
-      padding={{ base: "0px 25px", md: "0px 35px" }}
-      h="70px"
-      w="100%"
-      bg="bg.100"
-      pos="sticky"
+    <Stack
+      flexDirection="row"
+      alignItems="center"
+      justifyContent="space-between"
+      sx={{
+        padding: { xs: "0px 25px", md: "0px 35px" },
+      }}
+      height="70px"
+      width="100%"
+      bgcolor="var(--bg-color)"
+      position="sticky"
       top={0}
       zIndex={100}
     >
       <Link href="/">
-        <Flex align="center" gap="10px">
-          <Image height="45px" src="/img/logo.svg" alt="" />
-          <Flex align="center">
-            <Text color="brand.100">MED</Text>
-            <Text color="text.100">ZZY!</Text>
-          </Flex>
-        </Flex>
+        <Stack flexDirection="row" alignItems="center" gap="10px">
+          <Image height="45" width="45" src="/img/logo.svg" alt="" />
+          <Stack flexDirection="row" alignItems="center">
+            <Typography color="var(--accent-color)">MED</Typography>
+            <Typography color="var(--text-sec)">ZZY!</Typography>
+          </Stack>
+        </Stack>
       </Link>
 
       {!user ? (
-        <Flex align="center" gap="10px">
+        <Stack flexDirection="row" alignItems="center" gap="10px">
           <Link href="/login">
-            <Button variant="ghost">Login</Button>
+            <Button variant="text">Login</Button>
           </Link>
           <Link href="/register">
-            <Button variant="outline">Get started</Button>
+            <Button variant="outlined">Get started</Button>
           </Link>
-        </Flex>
+        </Stack>
       ) : (
         <HospitalMenu>
-          <Flex
-            align="center"
-            gap={{ base: "2px", md: "10px" }}
-            bg="gray.700"
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            bgcolor="var(--bg-overlay)"
             borderRadius="30px"
             padding="5px"
+            sx={{ cursor: "pointer", gap: { xs: "2px", md: "10px" } }}
           >
-            <Avatar src={hospitalData?.imageURL} boxSize="30px" />
-            <Flex align="center">
-              <Text
+            <Avatar
+              src={hospitalData?.imageURL}
+              sx={{ width: "30px", height: "30px" }}
+              alt=""
+            />
+            <Stack alignItems="center" flexDirection="row">
+              <Typography
                 fontWeight={600}
                 color="brand.100"
-                display={{ base: "none", md: "unset" }}
+                sx={{ display: { xs: "none", md: "unset" } }}
               >
                 {hospitalData.name}
-              </Text>
-              <ChevronDownIcon fontSize="2xl" color="text.100" />
-            </Flex>
-          </Flex>
+              </Typography>
+              <ExpandMore sx={{ color: "var(--text-sec)" }} />
+            </Stack>
+          </Stack>
         </HospitalMenu>
       )}
-    </Flex>
+    </Stack>
   );
 };
 export default Navbar;
