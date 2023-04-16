@@ -1,9 +1,11 @@
-import { ExpandMore } from "@mui/icons-material";
-import { Typography, Stack, Avatar } from "@mui/material";
+import { Add, ExpandMore, Menu } from "@mui/icons-material";
+import { Typography, Stack, Avatar, IconButton, Button } from "@mui/material";
 import React from "react";
 import HospitalMenu from "../menus/HospitalMenu";
 import useHospitalData from "../../hooks/useHospitalData";
-import { hospitalDataState } from "../../atoms/hospitalDataAtom";
+import Link from "next/link";
+import { useRecoilState } from "recoil";
+import { globalState } from "../../atoms/globalAtom";
 
 type HeaderProps = {
   title: string;
@@ -12,6 +14,14 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ title }) => {
   const { hospitalStateValue } = useHospitalData();
   const hospitalData = hospitalStateValue.hospitalData;
+  const [sidebarShow, setSidebarShow] = useRecoilState(globalState);
+
+  const toggleSidebar = () => {
+    setSidebarShow((prev) => ({
+      ...prev,
+      sidebarShow: !prev.sidebarShow,
+    }));
+  };
 
   return (
     <Stack
@@ -28,31 +38,54 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         {title}
       </Typography>
 
-      <HospitalMenu>
-        <Stack
-          flexDirection="row"
-          alignItems="center"
-          sx={{ cursor: "pointer", gap: { xs: "2px", md: "10px" } }}
-          bgcolor="var(--bg-overlay)"
-          borderRadius="30px"
-          padding="5px"
-        >
-          <Avatar
-            src={hospitalData?.imageURL}
-            sx={{ width: "30px", height: "30px" }}
-          />
-          <Stack flexDirection="row" alignItems="center">
-            <Typography
-              fontWeight={600}
-              color="brand.100"
-              display={{ base: "none", md: "unset" }}
-            >
-              {hospitalData.name}
-            </Typography>
-            <ExpandMore sx={{ color: "var(--text-sec)" }} />
+      <Stack flexDirection="row" alignItems="center" gap="5px">
+        <HospitalMenu>
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            sx={{ cursor: "pointer", gap: { xs: "2px", md: "10px" } }}
+            bgcolor="var(--bg-overlay)"
+            borderRadius="30px"
+            padding="5px"
+          >
+            <Avatar
+              src={hospitalData?.imageURL}
+              sx={{ width: "30px", height: "30px" }}
+            />
+            <Stack flexDirection="row" alignItems="center">
+              <Typography
+                fontWeight={600}
+                color="brand.100"
+                sx={{ display: { xs: "none", md: "unset" } }}
+              >
+                {hospitalData?.name}
+              </Typography>
+              <ExpandMore sx={{ color: "var(--text-sec)" }} />
+            </Stack>
           </Stack>
-        </Stack>
-      </HospitalMenu>
+        </HospitalMenu>
+
+        <Link href="/patient/new">
+          <Button
+            endIcon={<Add />}
+            sx={{
+              backgroundImage: "var(--bg-gradient)",
+              color: "white",
+              fontWeight: 600,
+              borderRadius: "25px",
+            }}
+          >
+            New
+          </Button>
+        </Link>
+
+        <IconButton
+          sx={{ display: { xs: "unset", md: "none" } }}
+          onClick={toggleSidebar}
+        >
+          <Menu />
+        </IconButton>
+      </Stack>
     </Stack>
   );
 };

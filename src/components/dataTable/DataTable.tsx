@@ -1,48 +1,13 @@
 import React from "react";
-import {
-  Stack,
-  Box,
-  CircularProgress,
-  Button,
-  Icon,
-  IconButton,
-} from "@mui/material";
+import { Stack, Box, CircularProgress, IconButton } from "@mui/material";
 import { DataGrid, GridRenderCellParams, GridToolbar } from "@mui/x-data-grid";
 import Link from "next/link";
 import { Delete, Preview } from "@mui/icons-material";
+import { userColumns } from "../../utils/datatablesrc";
 
 type DataTableProps = {};
 
 const DataTable: React.FC<DataTableProps> = () => {
-  const userColumns = [
-    { field: "id", headerName: "ID", width: 100 },
-    {
-      field: "fullname",
-      headerName: "Patient Name",
-      width: 200,
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      width: 100,
-    },
-    {
-      field: "phone",
-      headerName: "Phone",
-      width: 180,
-    },
-    {
-      field: "bloodGroup",
-      headerName: "Blood Group",
-      width: 140,
-    },
-    {
-      field: "gender",
-      headerName: "Gender",
-      width: 100,
-    },
-  ];
-
   const patients = [
     {
       id: "kdkfhwkds",
@@ -84,6 +49,9 @@ const DataTable: React.FC<DataTableProps> = () => {
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation();
                   }}
+                  sx={{
+                    backgroundImage: "var(--bg-gradient)",
+                  }}
                 >
                   <Preview />
                 </IconButton>
@@ -92,6 +60,9 @@ const DataTable: React.FC<DataTableProps> = () => {
               <IconButton
                 onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
+                }}
+                sx={{
+                  backgroundImage: "var(--bg-gradient-red)",
                 }}
               >
                 <Delete />
@@ -104,7 +75,7 @@ const DataTable: React.FC<DataTableProps> = () => {
   ];
 
   return (
-    <Stack>
+    <Stack width="100%">
       <Box sx={{ height: "500px", width: "100%", mt: "40px" }}>
         <DataGrid
           components={{

@@ -13,10 +13,13 @@ import {
   Tune,
 } from "@mui/icons-material";
 import Image from "next/image";
+import { useRecoilValue } from "recoil";
+import { globalState } from "../../atoms/globalAtom";
 
 type SidebarProps = {};
 
 const Sidebar: React.FC<SidebarProps> = () => {
+  const sidebarState = useRecoilValue(globalState);
   const router = useRouter();
   const pathname = router.pathname;
 
@@ -27,12 +30,25 @@ const Sidebar: React.FC<SidebarProps> = () => {
 
   return (
     <Stack
-      position="relative"
+      position="fixed"
+      top={0}
       height="100vh"
       borderRight="0.5px solid #308c7a4d"
       padding="15px"
-      bgcolor="rgba(48, 140, 122, 0.15)"
       borderRadius="0px 30px 30px 0px"
+      sx={{
+        bgcolor: { xs: "var(--bg-color)", md: "rgba(48, 140, 122, 0.15)" },
+        // display: { xs: sidebarState.sidebarShow ? "flex" : "none", md: "flex" },
+        zIndex: { xs: 999, md: "unset" },
+        width: { xs: "250px", md: "unset" },
+        transform: {
+          xs: sidebarState.sidebarShow
+            ? "translateX(0px)"
+            : "translateX(-250px)",
+          md: "unset",
+        },
+        transition: "all 0.3s ease-in-out",
+      }}
     >
       <Stack
         flexDirection="row"

@@ -60,7 +60,7 @@ const theme = createTheme({
         h1: {
           fontWeight: 700,
           background:
-            "-webkit-linear-gradient(45deg, #008080 30%, #008000 90%)",
+            "-webkit-linear-gradient(45deg, #008080 30%, #008040 90%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
         },

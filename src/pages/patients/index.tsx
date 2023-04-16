@@ -1,12 +1,12 @@
 import Head from "next/head";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import React from "react";
 import Header from "../../components/header/Header";
 import DataTable from "../../components/dataTable/DataTable";
 
-type indexProps = {};
+type PatientsProps = {};
 
-const index: React.FC<indexProps> = () => {
+const Patients: React.FC<PatientsProps> = () => {
   return (
     <>
       <Head>
@@ -15,12 +15,12 @@ const index: React.FC<indexProps> = () => {
         <link rel="icon" href="/img/logo.svg" />
       </Head>
 
-      <Stack p="30px">
-        <Header title="Patients" />
-
-        <DataTable />
+      <Stack>
+        <Box>
+          <DataTable />
+        </Box>
       </Stack>
     </>
   );
 };
-export default index;
+export default Patients;

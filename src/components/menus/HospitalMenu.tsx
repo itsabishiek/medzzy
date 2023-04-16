@@ -26,12 +26,7 @@ const HospitalMenu: React.FC<HospitalMenuProps> = ({ children }) => {
   return (
     <>
       <Box onClick={handleClick}>{children}</Box>
-      <Menu
-        variant="menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <Link href="/dashboard">
           <MenuItem
             sx={{ fontWeight: 600, fontSize: "14px" }}

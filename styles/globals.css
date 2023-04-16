@@ -1,6 +1,8 @@
 :root {
   --bg-color: #1a202c;
   --bg-overlay: #2d3748;
+  --bg-gradient: linear-gradient(45deg, #008080 30%, #008040 90%);
+  --bg-gradient-red: linear-gradient(45deg, #ff1a1a 30%, #ff4242 90%);
   --accent-color: #27c399;
   --accent-light: rgba(48, 140, 122, 0.3);
   --text-color: #edf2f7;
