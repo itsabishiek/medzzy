@@ -35,3 +35,34 @@ a {
 .MuiDataGrid-root .MuiDataGrid-withBorderColor {
   border-color: #2d3748;
 }
+
+::selection {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.formInput {
+  width: 45%;
+  margin-bottom: 25px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: var(--bg-gradient);
+  border-radius: 20px;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: none;
+}

@@ -3,6 +3,7 @@ import { Box, Menu, MenuItem } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { auth } from "../../firebase/clientApp";
+import { useRouter } from "next/router";
 
 type HospitalMenuProps = {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ type HospitalMenuProps = {
 const HospitalMenu: React.FC<HospitalMenuProps> = ({ children }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const router = useRouter();
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -20,7 +22,7 @@ const HospitalMenu: React.FC<HospitalMenuProps> = ({ children }) => {
 
   const logout = async () => {
     await signOut(auth);
-    handleClose();
+    router.push("/");
   };
 
   return (

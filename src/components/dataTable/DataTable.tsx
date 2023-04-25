@@ -1,39 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Stack, Box, CircularProgress, IconButton } from "@mui/material";
 import { DataGrid, GridRenderCellParams, GridToolbar } from "@mui/x-data-grid";
 import Link from "next/link";
 import { Delete, Preview } from "@mui/icons-material";
 import { userColumns } from "../../utils/datatablesrc";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { firestore } from "../../firebase/clientApp";
+import useHospitalData from "../../hooks/useHospitalData";
 
 type DataTableProps = {};
 
 const DataTable: React.FC<DataTableProps> = () => {
-  const patients = [
-    {
-      id: "kdkfhwkds",
-      fullname: "Raj Mohan",
-      age: 18,
-      phone: "9734857933",
-      bloodGroup: "O +ve",
-      gender: "Male",
-    },
-    {
-      id: "fghfghghdfh",
-      fullname: "Chandar",
-      age: 18,
-      phone: "9734857933",
-      bloodGroup: "O +ve",
-      gender: "Male",
-    },
-    {
-      id: "dfgsfdfddf",
-      fullname: "John Doe",
-      age: 18,
-      phone: "9734857933",
-      bloodGroup: "O +ve",
-      gender: "Male",
-    },
-  ];
+  const { hospitalStateValue } = useHospitalData();
+  const hospitalData = hospitalStateValue.hospitalData;
+  const [patients, setPatients] = useState<{ id: string }[]>([]);
 
   const actionColumn = [
     {
@@ -73,6 +53,28 @@ const DataTable: React.FC<DataTableProps> = () => {
       },
     },
   ];
+
+  const getPatients = async () => {
+    try {
+      const patientsQ = query(
+        collection(firestore, `/hospitals/${hospitalData.username}/patients`),
+        orderBy("createdAt", "desc")
+      );
+      const patientsDocs = await getDocs(patientsQ);
+      const patients = patientsDocs.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setPatients(patients);
+    } catch (error) {
+      console.log("getPatients Error", error);
+    }
+  };
+
+  useEffect(() => {
+    getPatients();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Stack width="100%">

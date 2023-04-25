@@ -4,7 +4,7 @@ import React from "react";
 import HospitalMenu from "../menus/HospitalMenu";
 import useHospitalData from "../../hooks/useHospitalData";
 import Link from "next/link";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { globalState } from "../../atoms/globalAtom";
 
 type HeaderProps = {
@@ -14,7 +14,7 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ title }) => {
   const { hospitalStateValue } = useHospitalData();
   const hospitalData = hospitalStateValue.hospitalData;
-  const [sidebarShow, setSidebarShow] = useRecoilState(globalState);
+  const setSidebarShow = useSetRecoilState(globalState);
 
   const toggleSidebar = () => {
     setSidebarShow((prev) => ({

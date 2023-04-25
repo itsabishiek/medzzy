@@ -66,6 +66,15 @@ const theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "&:focus": {
+            backgroundColor: "transparent",
+          },
+        },
+      },
+    },
   },
 });
 
