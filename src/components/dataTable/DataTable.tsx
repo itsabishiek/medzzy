@@ -4,9 +4,17 @@ import { DataGrid, GridRenderCellParams, GridToolbar } from "@mui/x-data-grid";
 import Link from "next/link";
 import { Delete, Preview } from "@mui/icons-material";
 import { userColumns } from "../../utils/datatablesrc";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { firestore } from "../../firebase/clientApp";
 import useHospitalData from "../../hooks/useHospitalData";
+import DeleteModal from "../modals/DeleteModal";
 
 type DataTableProps = {};
 
@@ -14,6 +22,7 @@ const DataTable: React.FC<DataTableProps> = () => {
   const { hospitalStateValue } = useHospitalData();
   const hospitalData = hospitalStateValue.hospitalData;
   const [patients, setPatients] = useState<{ id: string }[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const actionColumn = [
     {
@@ -37,22 +46,35 @@ const DataTable: React.FC<DataTableProps> = () => {
                 </IconButton>
               </Link>
 
-              <IconButton
-                onClick={(e: React.MouseEvent) => {
-                  e.stopPropagation();
-                }}
-                sx={{
-                  backgroundImage: "var(--bg-gradient-red)",
-                }}
+              <DeleteModal
+                handleDelete={handleDelete}
+                id={params.row.id}
+                loading={loading}
               >
                 <Delete />
-              </IconButton>
+              </DeleteModal>
             </Stack>
           </>
         );
       },
     },
   ];
+
+  const handleDelete = async (patientId: string) => {
+    try {
+      setLoading(true);
+      const patientDocRef = doc(
+        firestore,
+        `/hospitals/${hospitalData.username}/patients/${patientId}`
+      );
+      await deleteDoc(patientDocRef);
+
+      setPatients(patients.filter((patient) => patient.id !== patientId));
+      setLoading(false);
+    } catch (error) {
+      console.log("handleDelete Error", error);
+    }
+  };
 
   const getPatients = async () => {
     try {

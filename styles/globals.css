@@ -66,3 +66,33 @@ a {
 input:-webkit-autofill {
   -webkit-box-shadow: none;
 }
+
+input[type="checkbox"] {
+  appearance: none;
+  border: 1px solid var(--text-sec);
+  border-radius: 2px;
+}
+
+input[type="checkbox"]:checked {
+  position: relative;
+  background-color: var(--accent-color);
+  border: none;
+}
+
+input[type="checkbox"]:checked::before {
+  content: "";
+  position: absolute;
+  width: 1.2ex;
+  height: 0.4ex;
+  background: rgba(0, 0, 0, 0);
+  top: 0.7ex;
+  left: 0.5ex;
+  border: 3px solid var(--bg-color);
+  border-top: none;
+  border-right: none;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
