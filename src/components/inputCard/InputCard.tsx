@@ -14,8 +14,8 @@ const InputCard: React.FC<InputCardProps> = ({ label, value, multi }) => {
       border="1px solid #229476"
       padding="10px 15px"
       borderRadius="15px"
-      width="45%"
       height={multi ? "100px" : "69px"}
+      sx={{ width: { xs: "100%", md: "45%" } }}
     >
       <Typography fontSize="12px" color="var(--text-sec)">
         {label}

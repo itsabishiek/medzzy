@@ -41,19 +41,6 @@ a {
   color: var(--text-color);
 }
 
-.form {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  flex-wrap: wrap;
-}
-
-.formInput {
-  width: 45%;
-  margin-bottom: 25px;
-}
-
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -95,4 +82,28 @@ input[type="checkbox"]:checked::before {
   -o-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.formInput {
+  width: 45%;
+  /* margin-bottom: 25px !important; */
+}
+
+@media (max-width: 768px) {
+  .form {
+    flex-direction: column;
+  }
+
+  .formInput {
+    width: 100%;
+  }
 }

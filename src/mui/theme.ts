@@ -55,6 +55,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: "#2d3748",
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         h1: {
