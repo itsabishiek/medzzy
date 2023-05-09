@@ -98,6 +98,10 @@ input[type="checkbox"]:checked::before {
   /* margin-bottom: 25px !important; */
 }
 
+input {
+  color-scheme: dark;
+}
+
 @media (max-width: 768px) {
   .form {
     flex-direction: column;

@@ -128,7 +128,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
         </Link>
 
         <Link
-          href="/"
+          href="/doctors"
           style={{
             width: "100%",
           }}

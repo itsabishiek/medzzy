@@ -2,6 +2,7 @@ import { Add, ExpandMore, Menu } from "@mui/icons-material";
 import { Typography, Stack, Avatar, IconButton, Button } from "@mui/material";
 import React from "react";
 import HospitalMenu from "../menus/HospitalMenu";
+import NewMenu from "../menus/NewMenu";
 import useHospitalData from "../../hooks/useHospitalData";
 import Link from "next/link";
 import { useSetRecoilState } from "recoil";
@@ -65,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
           </Stack>
         </HospitalMenu>
 
-        <Link href="/patient/new">
+        <NewMenu>
           <Button
             endIcon={<Add />}
             sx={{
@@ -77,7 +78,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
           >
             New
           </Button>
-        </Link>
+        </NewMenu>
 
         <IconButton
           sx={{ display: { xs: "unset", md: "none" } }}

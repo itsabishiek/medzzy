@@ -8,6 +8,8 @@ export type PatientDetails = {
   bloodGroup: string;
   height: string;
   weight: string;
+  dob: string;
+  patientType: string;
   symptoms: string;
   prescribedMed: string;
   address: string;

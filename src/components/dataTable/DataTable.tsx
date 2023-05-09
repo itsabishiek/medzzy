@@ -3,7 +3,7 @@ import { Stack, Box, CircularProgress, IconButton } from "@mui/material";
 import { DataGrid, GridRenderCellParams, GridToolbar } from "@mui/x-data-grid";
 import Link from "next/link";
 import { Delete, Preview } from "@mui/icons-material";
-import { userColumns } from "../../utils/datatablesrc";
+import { doctorColumns, patientColumns } from "../../utils/datatablesrc";
 import {
   collection,
   deleteDoc,
@@ -16,12 +16,15 @@ import { firestore } from "../../firebase/clientApp";
 import useHospitalData from "../../hooks/useHospitalData";
 import DeleteModal from "../modals/DeleteModal";
 
-type DataTableProps = {};
+type DataTableProps = {
+  doctor?: boolean;
+};
 
-const DataTable: React.FC<DataTableProps> = () => {
+const DataTable: React.FC<DataTableProps> = ({ doctor }) => {
   const { hospitalStateValue } = useHospitalData();
   const hospitalData = hospitalStateValue.hospitalData;
   const [patients, setPatients] = useState<{ id: string }[]>([]);
+  const [doctors, setDoctors] = useState<{ id: string }[]>([]);
   const [loading, setLoading] = useState(false);
 
   const actionColumn = [
@@ -33,7 +36,13 @@ const DataTable: React.FC<DataTableProps> = () => {
         return (
           <>
             <Stack flexDirection="row" gap="10px">
-              <Link href={`/patient/${params.row.id}`}>
+              <Link
+                href={
+                  doctor
+                    ? `/doctor/${params.row.id}`
+                    : `/patient/${params.row.id}`
+                }
+              >
                 <IconButton
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation();
@@ -60,16 +69,24 @@ const DataTable: React.FC<DataTableProps> = () => {
     },
   ];
 
-  const handleDelete = async (patientId: string) => {
+  const handleDelete = async (id: string) => {
     try {
       setLoading(true);
       const patientDocRef = doc(
         firestore,
-        `/hospitals/${hospitalData.username}/patients/${patientId}`
+        `/hospitals/${hospitalData.username}/patients/${id}`
       );
-      await deleteDoc(patientDocRef);
+      const doctorDocRef = doc(
+        firestore,
+        `hospitals/${hospitalData.username}/doctors/${id}`
+      );
+      await deleteDoc(doctor ? doctorDocRef : patientDocRef);
 
-      setPatients(patients.filter((patient) => patient.id !== patientId));
+      if (doctor) {
+        setDoctors(doctors.filter((doctor) => doctor.id !== id));
+      } else {
+        setPatients(patients.filter((patient) => patient.id !== id));
+      }
       setLoading(false);
     } catch (error) {
       console.log("handleDelete Error", error);
@@ -93,8 +110,26 @@ const DataTable: React.FC<DataTableProps> = () => {
     }
   };
 
+  const getDoctors = async () => {
+    try {
+      const doctorQ = query(
+        collection(firestore, `hospitals/${hospitalData.username}/doctors`),
+        orderBy("createdAt", "desc")
+      );
+      const doctorDocs = await getDocs(doctorQ);
+      const doctors = doctorDocs.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setDoctors(doctors);
+    } catch (error) {
+      console.log("getDoctors Error", error);
+    }
+  };
+
   useEffect(() => {
     getPatients();
+    getDoctors();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -115,8 +150,12 @@ const DataTable: React.FC<DataTableProps> = () => {
               </Stack>
             ),
           }}
-          rows={patients}
-          columns={userColumns.concat(actionColumn)}
+          rows={doctor ? doctors : patients}
+          columns={
+            doctor
+              ? doctorColumns.concat(actionColumn)
+              : patientColumns.concat(actionColumn)
+          }
           checkboxSelection
           pagination
           pageSizeOptions={[10]}

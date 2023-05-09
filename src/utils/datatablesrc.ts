@@ -1,4 +1,4 @@
-const userColumns = [
+const patientColumns = [
   { field: "id", headerName: "ID", width: 120 },
   {
     field: "fullname",
@@ -27,4 +27,28 @@ const userColumns = [
   },
 ];
 
-export { userColumns };
+const doctorColumns = [
+  { field: "id", headerName: "ID", width: 120 },
+  {
+    field: "fullname",
+    headerName: "Doctor Name",
+    width: 200,
+  },
+  {
+    field: "department",
+    headerName: "Department",
+    width: 180,
+  },
+  {
+    field: "phone",
+    headerName: "Phone",
+    width: 180,
+  },
+  {
+    field: "gender",
+    headerName: "Gender",
+    width: 140,
+  },
+];
+
+export { patientColumns, doctorColumns };

@@ -21,14 +21,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         pathname === "/patients" ||
         pathname === "/patient/new" ||
         pathname === "/patient/[patientId]" ||
-        pathname === "/patient/[patientId]/edit"
+        pathname === "/patient/[patientId]/edit" ||
+        pathname === "/doctors" ||
+        pathname === "/doctor/new"
       ) && <Navbar />}
 
       {pathname === "/dashboard" ||
       pathname === "/patients" ||
       pathname === "/patient/new" ||
       pathname === "/patient/[patientId]" ||
-      pathname === "/patient/[patientId]/edit" ? (
+      pathname === "/patient/[patientId]/edit" ||
+      pathname === "/doctors" ||
+      pathname === "/doctor/new" ? (
         <Stack flexDirection="row">
           <Box sx={{ flex: { xs: 0, md: 1 }, width: "100%" }}>
             <Sidebar />
