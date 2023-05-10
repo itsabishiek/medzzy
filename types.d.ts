@@ -19,3 +19,19 @@ export type PatientDetails = {
   diabetic: boolean;
   smoker: boolean;
 };
+
+export type DoctorDetails = {
+  id: string;
+  fullname: string;
+  phone: string;
+  email: string;
+  age: string;
+  gender: string;
+  bloodGroup: string;
+  dob: string;
+  department: string;
+  medDegree: string;
+  speciality: string;
+  address: string;
+  addInfo: string;
+};

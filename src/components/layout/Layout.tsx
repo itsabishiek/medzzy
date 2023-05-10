@@ -23,7 +23,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         pathname === "/patient/[patientId]" ||
         pathname === "/patient/[patientId]/edit" ||
         pathname === "/doctors" ||
-        pathname === "/doctor/new"
+        pathname === "/doctor/new" ||
+        pathname === "/doctor/[doctorId]" ||
+        pathname === "/doctor/[doctorId]/edit"
       ) && <Navbar />}
 
       {pathname === "/dashboard" ||
@@ -32,7 +34,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       pathname === "/patient/[patientId]" ||
       pathname === "/patient/[patientId]/edit" ||
       pathname === "/doctors" ||
-      pathname === "/doctor/new" ? (
+      pathname === "/doctor/new" ||
+      pathname === "/doctor/[doctorId]" ||
+      pathname === "/doctor/[doctorId]/edit" ? (
         <Stack flexDirection="row">
           <Box sx={{ flex: { xs: 0, md: 1 }, width: "100%" }}>
             <Sidebar />
