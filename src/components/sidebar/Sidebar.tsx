@@ -13,13 +13,13 @@ import {
   Tune,
 } from "@mui/icons-material";
 import Image from "next/image";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { globalState } from "../../atoms/globalAtom";
 
 type SidebarProps = {};
 
 const Sidebar: React.FC<SidebarProps> = () => {
-  const sidebarState = useRecoilValue(globalState);
+  const [sidebarState, setSidebarState] = useRecoilState(globalState);
   const router = useRouter();
   const pathname = router.pathname;
 
@@ -70,6 +70,9 @@ const Sidebar: React.FC<SidebarProps> = () => {
           style={{
             width: "100%",
           }}
+          onClick={() =>
+            setSidebarState((prev) => ({ ...prev, sidebarShow: false }))
+          }
         >
           <Stack
             flexDirection="row"
@@ -101,6 +104,9 @@ const Sidebar: React.FC<SidebarProps> = () => {
           style={{
             width: "100%",
           }}
+          onClick={() =>
+            setSidebarState((prev) => ({ ...prev, sidebarShow: false }))
+          }
         >
           <Stack
             flexDirection="row"
@@ -132,6 +138,9 @@ const Sidebar: React.FC<SidebarProps> = () => {
           style={{
             width: "100%",
           }}
+          onClick={() =>
+            setSidebarState((prev) => ({ ...prev, sidebarShow: false }))
+          }
         >
           <Stack
             flexDirection="row"
@@ -159,10 +168,13 @@ const Sidebar: React.FC<SidebarProps> = () => {
         </Link>
 
         <Link
-          href="/"
+          href="/healthcare"
           style={{
             width: "100%",
           }}
+          onClick={() =>
+            setSidebarState((prev) => ({ ...prev, sidebarShow: false }))
+          }
         >
           <Stack
             flexDirection="row"
@@ -190,10 +202,13 @@ const Sidebar: React.FC<SidebarProps> = () => {
         </Link>
 
         <Link
-          href="/"
+          href="/settings"
           style={{
             width: "100%",
           }}
+          onClick={() =>
+            setSidebarState((prev) => ({ ...prev, sidebarShow: false }))
+          }
         >
           <Stack
             flexDirection="row"

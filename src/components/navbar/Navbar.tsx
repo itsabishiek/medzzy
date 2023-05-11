@@ -70,7 +70,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                 color="brand.100"
                 sx={{ display: { xs: "none", md: "unset" } }}
               >
-                {hospitalData.name}
+                {hospitalData?.name}
               </Typography>
               <ExpandMore sx={{ color: "var(--text-sec)" }} />
             </Stack>
