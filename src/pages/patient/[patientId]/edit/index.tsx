@@ -4,6 +4,7 @@ import {
   Checkbox,
   CircularProgress,
   FormControlLabel,
+  IconButton,
   MenuItem,
   Stack,
   TextField,
@@ -15,6 +16,9 @@ import useHospitalData from "../../../../hooks/useHospitalData";
 import { doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { firestore } from "../../../../firebase/clientApp";
 import { PatientDetails } from "../../../../../types";
+import { MiscellaneousServices } from "@mui/icons-material";
+import EditModal from "../../../../components/modals/EditModal";
+import PatientTabs from "../../../../components/tabs/patientTabs/PatientTabs";
 
 type EditPatientDetailsProps = {};
 
@@ -125,7 +129,7 @@ const EditPatientDetails: React.FC<EditPatientDetailsProps> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patientId, patientDetails?.id]);
 
-  console.log(patientDetails);
+  // console.log(patientDetails);
 
   return (
     <>
@@ -295,7 +299,7 @@ const EditPatientDetails: React.FC<EditPatientDetailsProps> = () => {
               justifyContent="space-between"
               width="100%"
               flexWrap="wrap"
-              margin="10px 0px"
+              marginTop="10px"
             >
               <FormControlLabel
                 control={
@@ -339,31 +343,40 @@ const EditPatientDetails: React.FC<EditPatientDetailsProps> = () => {
               />
             </Stack>
 
-            <Button
-              sx={{
-                backgroundImage: "var(--bg-gradient)",
-                color: "white",
-                fontWeight: 600,
-                borderRadius: "25px",
-                padding: "8px 40px",
-                marginTop: "15px",
-              }}
-              type="submit"
-            >
-              {loading ? (
-                <CircularProgress
-                  color="inherit"
-                  size="20px"
-                  sx={{ margin: "0px 20px" }}
-                />
-              ) : (
-                "Submit"
-              )}
-            </Button>
+            <PatientTabs />
+
+            <Stack flexDirection="row" alignItems="center" gap="20px">
+              <Button
+                sx={{
+                  backgroundImage: "var(--bg-gradient)",
+                  color: "white",
+                  fontWeight: 600,
+                  borderRadius: "25px",
+                  padding: "8px 40px",
+                  marginTop: "15px",
+                }}
+                type="submit"
+              >
+                {loading ? (
+                  <CircularProgress
+                    color="inherit"
+                    size="20px"
+                    sx={{ margin: "0px 20px" }}
+                  />
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+
+              <EditModal>
+                <MiscellaneousServices />
+              </EditModal>
+            </Stack>
           </form>
         </Stack>
       </Stack>
     </>
   );
 };
+
 export default EditPatientDetails;

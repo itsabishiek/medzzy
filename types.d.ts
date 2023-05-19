@@ -35,3 +35,14 @@ export type DoctorDetails = {
   address: string;
   addInfo: string;
 };
+
+export type PatientMiscellaneous = {
+  prescriptionDate: string;
+  symptoms: string;
+  prescribedMed: string;
+  vitalsDate: string;
+  bodyTemp: string;
+  heartRate: string;
+  respiratoryRate: string;
+  bloodPressure: string;
+};

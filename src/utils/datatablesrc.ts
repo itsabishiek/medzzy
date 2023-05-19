@@ -27,6 +27,52 @@ const patientColumns = [
   },
 ];
 
+const patientPresTabColumn = [
+  {
+    field: "prescriptionDate",
+    headerName: "Date",
+    width: 200,
+  },
+  {
+    field: "symptoms",
+    headerName: "Symptoms",
+    width: 250,
+  },
+  {
+    field: "prescribedMed",
+    headerName: "Prescribed Medicines",
+    width: 300,
+  },
+];
+
+const patientVitalTabColumn = [
+  {
+    field: "bodyTemp",
+    headerName: "Body Temperature",
+    width: 200,
+  },
+  {
+    field: "heartRate",
+    headerName: "Heart Rate/Pulse",
+    width: 200,
+  },
+  {
+    field: "respiratoryRate",
+    headerName: "Respiratory Rate",
+    width: 200,
+  },
+  {
+    field: "bloodPressure",
+    headerName: "Blood Pressure",
+    width: 200,
+  },
+  {
+    field: "vitalsDate",
+    headerName: "Date Recorded",
+    width: 200,
+  },
+];
+
 const doctorColumns = [
   { field: "id", headerName: "ID", width: 120 },
   {
@@ -51,4 +97,9 @@ const doctorColumns = [
   },
 ];
 
-export { patientColumns, doctorColumns };
+export {
+  patientColumns,
+  doctorColumns,
+  patientPresTabColumn,
+  patientVitalTabColumn,
+};

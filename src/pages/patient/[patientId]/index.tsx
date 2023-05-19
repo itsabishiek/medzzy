@@ -8,6 +8,7 @@ import useHospitalData from "../../../hooks/useHospitalData";
 import { doc, getDoc } from "firebase/firestore";
 import { firestore } from "../../../firebase/clientApp";
 import { PatientDetails } from "../../../../types";
+import PatientTabs from "../../../components/tabs/patientTabs/PatientTabs";
 
 type PatientDetailsProps = {};
 
@@ -153,6 +154,8 @@ const PatientDetails: React.FC<PatientDetailsProps> = () => {
               <label style={{ paddingBottom: 1, fontSize: 17 }}>Smoker</label>
             </Box>
           </Stack>
+
+          <PatientTabs />
 
           <Link href={`/patient/${patientId}/edit`}>
             <Button
