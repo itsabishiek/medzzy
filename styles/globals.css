@@ -102,6 +102,28 @@ input {
   color-scheme: dark;
 }
 
+.statusCard::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: -50%;
+  background-color: var(--accent-color);
+  padding-top: 100%;
+  border-radius: 100%;
+  transform: scale(0);
+  transition: transform 0.8s ease 0s;
+  z-index: -1;
+}
+
+.statusCard:hover::before {
+  transform: scale(3);
+}
+
+.statusCard:hover {
+  color: white !important;
+}
+
 @media (max-width: 768px) {
   .form {
     flex-direction: column;
