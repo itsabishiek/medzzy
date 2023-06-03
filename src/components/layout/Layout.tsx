@@ -38,7 +38,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       pathname === "/doctor/[doctorId]" ||
       pathname === "/doctor/[doctorId]/edit" ? (
         <Stack flexDirection="row">
-          <Box sx={{ flex: { xs: 0, md: 1 }, width: "100%" }}>
+          <Box sx={{ flex: { xs: 0, lg: 1 }, width: "100%" }}>
             <Sidebar />
           </Box>
           <Stack

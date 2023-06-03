@@ -37,15 +37,15 @@ const Sidebar: React.FC<SidebarProps> = () => {
       padding="15px"
       borderRadius="0px 30px 30px 0px"
       sx={{
-        bgcolor: { xs: "var(--bg-color)", md: "rgba(48, 140, 122, 0.15)" },
+        bgcolor: { xs: "var(--bg-color)", lg: "rgba(48, 140, 122, 0.15)" },
         // display: { xs: sidebarState.sidebarShow ? "flex" : "none", md: "flex" },
-        zIndex: { xs: 999, md: "unset" },
-        width: { xs: "250px", md: "unset" },
+        zIndex: { xs: 999, lg: "unset" },
+        width: { xs: "250px", lg: "unset" },
         transform: {
           xs: sidebarState.sidebarShow
             ? "translateX(0px)"
             : "translateX(-250px)",
-          md: "unset",
+          lg: "unset",
         },
         transition: "all 0.3s ease-in-out",
       }}

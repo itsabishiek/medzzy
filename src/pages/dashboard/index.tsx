@@ -3,10 +3,10 @@ import React from "react";
 import ReactECharts from "echarts-for-react";
 import * as echarts from "echarts";
 import {
-  ApiOutlined,
-  ApprovalOutlined,
-  BoltOutlined,
-  PeopleAltOutlined,
+  Groups2,
+  Groups3,
+  HealthAndSafety,
+  Inventory,
 } from "@mui/icons-material";
 import StatusCard from "../../components/statusCard/StatusCard";
 import { Grid } from "@mui/material";
@@ -15,22 +15,22 @@ type DashboardProps = {};
 
 const statusCard = [
   {
-    icon: <BoltOutlined sx={{ fontSize: "40px" }} />,
+    icon: <Groups2 sx={{ fontSize: "40px" }} />,
     count: "80+",
     title: "PATIENTS",
   },
   {
-    icon: <PeopleAltOutlined sx={{ fontSize: "30px" }} />,
+    icon: <Groups3 sx={{ fontSize: "30px" }} />,
     count: "25+",
     title: "DOCTORS",
   },
   {
-    icon: <ApprovalOutlined sx={{ fontSize: "30px" }} />,
+    icon: <Inventory sx={{ fontSize: "30px" }} />,
     count: "100+",
     title: "STOCKS",
   },
   {
-    icon: <ApiOutlined sx={{ fontSize: "30px" }} />,
+    icon: <HealthAndSafety sx={{ fontSize: "30px" }} />,
     count: "70+",
     title: "HEALTH CARE",
   },

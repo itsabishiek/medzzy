@@ -81,7 +81,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         </NewMenu>
 
         <IconButton
-          sx={{ display: { xs: "unset", md: "none" } }}
+          sx={{ display: { xs: "unset", lg: "none" } }}
           onClick={toggleSidebar}
         >
           <Menu />
