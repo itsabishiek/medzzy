@@ -11,7 +11,7 @@ const InputCard: React.FC<InputCardProps> = ({ label, value, multi }) => {
   return (
     <Stack
       gap="5px"
-      border="1px solid #229476"
+      border="1px solid #f5a42ab5"
       padding="10px 15px"
       borderRadius="15px"
       height={multi ? "100px" : "69px"}

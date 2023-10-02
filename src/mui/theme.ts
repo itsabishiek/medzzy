@@ -4,7 +4,7 @@ const theme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#27c399",
+      main: "rgb(255 161 22)",
     },
   },
   components: {
@@ -39,7 +39,7 @@ const theme = createTheme({
         {
           props: { variant: "circular" },
           style: {
-            backgroundColor: "#2d3748",
+            backgroundColor: "rgb(40, 40, 40)",
             color: "#a0aec0",
           },
         },
@@ -48,7 +48,7 @@ const theme = createTheme({
     MuiMenu: {
       styleOverrides: {
         paper: {
-          backgroundColor: "#2d3748",
+          backgroundColor: "rgb(40, 40, 40)",
           border: "1px solid rgba(255, 255, 255, 0.16)",
           width: "185px",
           marginTop: 4,
@@ -58,7 +58,7 @@ const theme = createTheme({
     MuiDialog: {
       styleOverrides: {
         paper: {
-          backgroundColor: "#2d3748",
+          backgroundColor: "rgb(40, 40, 40)",
         },
       },
     },
@@ -66,8 +66,8 @@ const theme = createTheme({
       styleOverrides: {
         h1: {
           fontWeight: 700,
-          background:
-            "-webkit-linear-gradient(45deg, #008080 30%, #008040 90%)",
+          backgroundImage: "linear-gradient(to top right, #ffa116, #ff570f)",
+          backgroundClip: "text",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
         },

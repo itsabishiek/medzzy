@@ -32,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = () => {
     >
       <Link href="/">
         <Stack flexDirection="row" alignItems="center" gap="10px">
-          <Image height="45" width="45" src="/img/logo.svg" alt="" />
+          <Image height="45" width="45" src="/img/logo.png" alt="" />
           <Stack flexDirection="row" alignItems="center">
             <Typography color="var(--accent-color)">MED</Typography>
             <Typography color="var(--text-sec)">ZZY!</Typography>

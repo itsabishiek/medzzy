@@ -1,10 +1,11 @@
 :root {
-  --bg-color: #1a202c;
-  --bg-overlay: #2d3748;
-  --bg-gradient: linear-gradient(45deg, #008080 30%, #008040 90%);
+  --bg-color: rgb(26, 26, 26);
+  --bg-overlay: rgb(40, 40, 40);
+  --bg-sec: hsla(0, 0%, 100%, 0.14);
+  --bg-gradient: linear-gradient(45deg, #ffa116 30%, #ff570f 90%);
   --bg-gradient-red: linear-gradient(45deg, #ff1a1a 30%, #ff4242 90%);
-  --accent-color: #27c399;
-  --accent-light: rgba(48, 140, 122, 0.3);
+  --accent-color: rgb(255 161 22);
+  --accent-light: rgba(255, 161, 22, 0.1);
   --text-color: #edf2f7;
   --text-sec: #a0aec0;
 }

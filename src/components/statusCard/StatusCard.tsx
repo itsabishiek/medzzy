@@ -27,9 +27,9 @@ const StatusCard: React.FC<StatusCardProps> = ({ item }) => {
         flexDirection="row"
         alignItems="center"
         justifyContent="center"
-        bgcolor="rgba(48, 140, 122, 0.15)"
+        bgcolor="var(--accent-light)"
         width="100%"
-        border="1px solid #308c7a4d"
+        border="1px solid #ffa2168d"
         borderRadius="20px"
         padding="20px 10px"
         sx={{

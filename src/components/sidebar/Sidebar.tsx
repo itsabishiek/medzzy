@@ -33,11 +33,9 @@ const Sidebar: React.FC<SidebarProps> = () => {
       position="fixed"
       top={0}
       height="100vh"
-      borderRight="0.5px solid #308c7a4d"
       padding="15px"
-      borderRadius="0px 30px 30px 0px"
       sx={{
-        bgcolor: { xs: "var(--bg-color)", lg: "rgba(48, 140, 122, 0.15)" },
+        bgcolor: "rgb(40, 40, 40)",
         // display: { xs: sidebarState.sidebarShow ? "flex" : "none", md: "flex" },
         zIndex: { xs: 999, lg: "unset" },
         width: { xs: "250px", lg: "unset" },
@@ -57,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
         gap="10px"
         marginBottom="40px"
       >
-        <Image src="/img/logo.svg" alt="" height="45" width="45" />
+        <Image src="/img/logo.png" alt="" height="45" width="45" />
         <Stack flexDirection="row" alignItems="center">
           <Typography color="var(--accent-color)">MED</Typography>
           <Typography color="var(--text-sec)">ZZY!</Typography>
@@ -88,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
               backgroundColor:
                 pathname === "/dashboard" ? "var(--accent-color)" : "unset",
               borderRadius: "15px",
-              "&:hover": { backgroundColor: "var(--accent-light)" },
+              "&:hover": { backgroundColor: "var(--bg-sec)" },
               cursor: "pointer",
             }}
           >
@@ -122,7 +120,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
               bgcolor:
                 pathname === "/patients" ? "var(--accent-color)" : "unset",
               borderRadius: "15px",
-              "&:hover": { bgcolor: "var(--accent-light)" },
+              "&:hover": { bgcolor: "var(--bg-sec)" },
             }}
             color={pathname === "/patients" ? "white" : "var(--text-sec)"}
           >
@@ -156,7 +154,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
               bgcolor:
                 pathname === "/doctors" ? "var(--accent-color)" : "unset",
               borderRadius: "15px",
-              "&:hover": { bgcolor: "var(--accent-light)" },
+              "&:hover": { bgcolor: "var(--bg-sec)" },
             }}
             color={pathname === "/doctors" ? "white" : "var(--text-sec)"}
           >
@@ -190,7 +188,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
               bgcolor:
                 pathname === "/healthcare" ? "var(--accent-color)" : "unset",
               borderRadius: "15px",
-              "&:hover": { bgcolor: "var(--accent-light)" },
+              "&:hover": { bgcolor: "var(--bg-sec)" },
             }}
             color={pathname === "/healthcare" ? "white" : "var(--text-sec)"}
           >
@@ -224,7 +222,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
               bgcolor:
                 pathname === "/settings" ? "var(--accent-color)" : "unset",
               borderRadius: "15px",
-              "&:hover": { bgcolor: "var(--accent-light)" },
+              "&:hover": { bgcolor: "var(--bg-sec)" },
             }}
             color={pathname === "/settings" ? "white" : "var(--text-sec)"}
           >
@@ -256,7 +254,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
           sx={{
             cursor: "pointer",
             "&:hover": {
-              backgroundColor: "var(--accent-light)",
+              backgroundColor: "var(--bg-sec)",
             },
           }}
           onClick={logout}
